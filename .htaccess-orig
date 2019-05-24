@@ -1,6 +1,6 @@
 RewriteEngine on
 
-# needed because this page isn't in the webroot, its in public html
+# required if this isn't in the webroot, eg in public html
 
 RewriteBase /db/
 
