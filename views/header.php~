@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>Test</title>
+        <link rel="stylesheet" href="<?php echo URL; ?>public/css/default.css" />
+        <script type="text/javascript" src="<?php echo URL; ?>public/js/jquery.js"></script>       
+
+        <?php
+        if (isset($this->js)) {
+            foreach ($this->js as $js) {
+                echo '<script type="text/javascript" src="' . URL . 'views/' . $js . '"></script>';
+            }
+        }
+        ?>
+    </head>
+
+    <body>
+        <div id="header">
+            SCSTechs 
+            <hr />
+        </div>
+        <div id="loginlogout">
+            <?php if (User::isLoggedIn()): ?>
+                Logged in as 
+                    <?php echo User::get_firstname() . " " . User::get_lastname(); ?>
+                : <a href="<?php echo URL; ?>auth/doLogout" >Logout</a>
+
+            <?php endif ?>
+        </div>
+
+        <div id="nav"    >
+            <?php if (User::isLoggedIn()): ?>
+            <a class="navitem" href="<?php echo URL; ?>">Home</a>
+            <a class="navitem" href="<?php echo URL; ?>people">People</a>
+            <a class="navitem" href="<?php echo URL; ?>assets">Assets</a>
+            <a class="navitem" href="<?php echo URL; ?>loans">Loans</a>
+            <a class='navitem' href="<?php echo URL; ?>tickets">Tickets</a>
+            <a class="navitem" href="<?php echo URL; ?>userinfo">Search LJMU Users</a>
+            
+            <?php endif; ?>
+        </div>
+
+        <div id="content">

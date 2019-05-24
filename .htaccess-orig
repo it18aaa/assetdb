@@ -1,0 +1,17 @@
+RewriteEngine on
+
+# needed because this page isn't in the webroot, its in public html
+
+RewriteBase /db/
+
+# if the url is a real directory file or link, do not process!
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-l
+RewriteCond %{REQUEST_FILENAME} !-s
+
+
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+
+
+

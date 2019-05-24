@@ -1,0 +1,59 @@
+<?php
+
+class Auth_Model extends Model {
+
+    function __construct() {
+        parent::__construct();
+    }
+
+    function doLogin() {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $ldap = new LdapWrapper($username, $password);
+
+        // this needs reworking
+        
+        if ($ldap->doAuthenticate()) {
+
+            //if your name isn't down, you're not coming in
+            // authorised through LDAP - 
+
+            $userInfo = $ldap->getUsernameInfo();
+            $userInfo['username'] = $username;
+
+            // encrypt our password
+            $iv = Encryption::getIV();
+            $pwd = Encryption::encrypt($password, $iv);
+
+            // store
+            $userInfo['iv'] = $iv;
+            $userInfo['password'] = $pwd;
+            $userInfo['auth'] = 'true';
+            
+            // quick query to get the user id
+            $sql = "SELECT id FROM people " .
+                    "WHERE ljmuusername='$username'";
+            $data = $this->doQuery($sql);
+
+            $userInfo['id'] = $data[0]['id'];
+
+            // set the user variables
+            
+            Session::set('user', $userInfo);
+        } else {
+            //$userInfo['auth'] = false;
+            //Session::set('user', $userInfo);
+            // not authorised, fall back onto database             
+        }
+        return;
+    }
+
+    function doLogout() {
+
+
+        Session::set('user', null);
+        return;
+    }
+
+}

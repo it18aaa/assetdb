@@ -1,0 +1,10 @@
+<?php
+
+
+define('DB_TYPE','mysql');
+define('DB_HOST','localhost');
+define('DB_NAME','db1testing');
+define('DB_USER','db1testing');
+define('DB_PASS','testing');
+
+
